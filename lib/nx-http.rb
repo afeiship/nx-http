@@ -34,6 +34,10 @@ module Nx
       end
     end
 
+    def self.param(inData)
+      URI.encode_www_form(inData)
+    end
+
     class << self
       ['get', 'post', 'put', 'options'].each do |item|
           define_method item.to_sym do |url, data, options|
