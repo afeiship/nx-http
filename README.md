@@ -6,7 +6,7 @@
 # from gem
 gem 'nx-http'
 # from git
-gem 'nx-http', git: 'git@github.com:afeiship/nx-http.git',ref:'a6b0a57acd05315f97a70c9b45ffbbb7405afa0c'
+gem 'nx-http', git: 'git@github.com:afeiship/nx-http.git'
 ```
 
 ## usage
