@@ -1,0 +1,23 @@
+{
+  "name": "nx-http",
+  "version": "1.0.0",
+  "description": "Http for ruby gem.",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "clean": "rm -rf *.gem",
+    "build": "gem build *.gemspec",
+    "pubpush": "gem push *.gem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afeiship/nx-http.git"
+  },
+  "author": "afei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afeiship/nx-http/issues"
+  },
+  "homepage": "https://github.com/afeiship/nx-http#readme"
+}
