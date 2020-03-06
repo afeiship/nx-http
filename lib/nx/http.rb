@@ -8,7 +8,9 @@ module Nx
       data = DataTransform.multipart(in_data)
       request = Net::HTTP::Post.new(url.path)
       request.set_form(data, ContentType::MULTIPART)
-      yield(http, request)
+      if block_given?
+        yield(http, request)
+      end
       http.request(request)
     end
 
