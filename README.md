@@ -13,7 +13,6 @@ gem 'nx-http', git: 'git@github.com:afeiship/nx-http.git'
 ```rb
 Nx::Http::request
 
-
 ## ContentType:
 Nx::ContentType.constants
 # [:JSON, :URLENCODED, :MULTIPART]
@@ -35,3 +34,6 @@ gem build nx-http.gemspec
 # publish
 gem push nx-http-0.1.0.gem
 ```
+
+## resources
+- https://www.cnblogs.com/wf0117/p/9000443.html
