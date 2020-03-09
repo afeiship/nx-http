@@ -1,17 +1,11 @@
 module Nx
   class Http
     def self.upload(in_url, in_data)
-      url = URI(in_url)
-      http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = url.scheme == "https"
-
-      data = DataTransform.multipart(in_data)
-      request = Net::HTTP::Post.new(url.path)
-      request.set_form(data, ContentType::MULTIPART)
-      if block_given?
-        yield(http, request)
+      post(in_url, in_data) do |http, request, uri, method|
+        data = DataTransform.multipart(in_data)
+        request.set_form(data, ContentType::MULTIPART)
+        yield(http, request, uri, method)
       end
-      http.request(request)
     end
 
     def self.request(in_method, in_url, in_data = {}, in_options = {})
@@ -25,24 +19,18 @@ module Nx
 
       # request:
       method_class = Net::HTTP.const_get method.capitalize
-      request = method_class.new(in_url)
+      request = method_class.new(uri)
 
       # callback area:
       if method == "get"
         uri.query = URI.encode_www_form(in_data)
       else
         in_options.each do |key, value|
-          if key == :content_type
-            request[key] = ContentType.const_get value.upcase
-          else
-            request[key] = value
-          end
+          request[key] = value
         end
       end
 
-      if block_given?
-        yield(http, request)
-      end
+      yield(http, request, uri, method) if block_given?
 
       begin
         http.request(request)
