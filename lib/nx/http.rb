@@ -25,20 +25,25 @@ module Nx
 
       # request:
       method_class = Net::HTTP.const_get method.capitalize
-      req = method_class.new(uri)
+      request = method_class.new(uri)
 
       # callback area:
       if method == "get"
         uri.query = URI.encode_www_form(in_data)
       else
         in_options.each do |key, value|
-          req[key] = value
+          if key == "content_type"
+            ContentType.const_get value.upcase
+          else
+            request[key] = value
+          end
         end
       end
 
-      # yield(uri, method, req, http)
+      yield(uri, method, request, http)
+
       begin
-        http.request(req)
+        http.request(request)
       rescue => exception
         raise exception
       end
