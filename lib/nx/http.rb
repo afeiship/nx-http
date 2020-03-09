@@ -32,7 +32,7 @@ module Nx
         uri.query = URI.encode_www_form(in_data)
       else
         in_options.each do |key, value|
-          if key == "content_type"
+          if key == :content_type
             ContentType.const_get value.upcase
           else
             request[key] = value
