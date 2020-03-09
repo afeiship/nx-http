@@ -53,8 +53,8 @@ module Nx
 
     class << self
       ["get", "post", "put", "delete", "options"].each do |item|
-        define_method item.to_sym do |url, data, options|
-          self.request(item, url, data || {}, options || {})
+        define_method item.to_sym do |url, data = {}, options = {}|
+          self.request(item, url, data, options)
         end
       end
     end
