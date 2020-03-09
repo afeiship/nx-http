@@ -25,7 +25,7 @@ module Nx
 
       # request:
       method_class = Net::HTTP.const_get method.capitalize
-      request = method_class.new(uri)
+      request = method_class.new(in_url)
 
       # callback area:
       if method == "get"
