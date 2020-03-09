@@ -41,7 +41,7 @@ module Nx
       end
 
       if block_given?
-        yield(uri, method, request, http)
+        yield(http, request)
       end
 
       begin
@@ -53,8 +53,10 @@ module Nx
 
     class << self
       ["get", "post", "put", "delete", "options"].each do |item|
-        define_method item.to_sym do |url, data = {}, options = {}|
-          self.request(item, url, data, options)
+        define_method item.to_sym do |url, data = {}, options = {}, &block|
+          self.request(item, url, data, options) do |http, request|
+            block.call(http, request)
+          end
         end
       end
     end
