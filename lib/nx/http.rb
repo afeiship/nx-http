@@ -9,7 +9,7 @@ module Nx
     end
 
     def self.request(in_method, in_url, in_data = {}, in_options = {})
-      default_options = { data_type: :urlencoded }
+      default_options = { data_type: :urlencoded, response_type: :raw }
       options = default_options.merge(in_options)
       # uri:
       uri = URI(in_url)
@@ -37,7 +37,8 @@ module Nx
       yield(http, request, uri, method) if block_given?
 
       begin
-        http.request(request)
+        response = http.request(request)
+        options[:response_type] == :json ? JSON.parse(response) : response
       rescue => exception
         raise exception
       end
