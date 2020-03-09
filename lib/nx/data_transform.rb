@@ -1,6 +1,6 @@
 module Nx
   class DataTransform
-    def self.raw(data)
+    def self.plain(data)
       data
     end
 

@@ -19,11 +19,15 @@ COOKIE = "PANWEB=1; csrfToken=HGPEF5J4BMUKDsBEOzo8FNRr; recommendTime=mac2020-03
 # # response = http.post(url, { pic1: HTTP::FormData::File.new(tempfile) }, headers)
 # puts response.body
 
-res = Nx::Http.post("https://pan.baidu.com/api/precreate") do |http, request|
+res = Nx::Http.post("https://pan.baidu.com/api/precreate", {
+  path: "/db.file",
+  autoinit: 1,
+  block_list: '[""]',
+}) do |http, request|
   request["Content-Type"] = "application/x-www-form-urlencoded"
   request["Cookie"] = COOKIE
   request["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"
-  request.body = "path=/db.file&autoinit=1&block_list=%5B%225910a591dd8fc18c32a8f3df4fdc1761%22%5D"
+  # request.body = "path=/db.file&autoinit=1&block_list=%5B%225910a591dd8fc18c32a8f3df4fdc1761%22%5D"
 end
 
 puts res.body

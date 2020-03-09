@@ -9,6 +9,8 @@ module Nx
     end
 
     def self.request(in_method, in_url, in_data = {}, in_options = {})
+      default_options = { data_type: :urlencoded }
+      options = default_options.merge(in_options)
       # uri:
       uri = URI(in_url)
       method = in_method.downcase
@@ -20,14 +22,16 @@ module Nx
       # request:
       method_class = Net::HTTP.const_get method.capitalize
       request = method_class.new(uri)
+      request.content_type = ContentType.const_get(options[:data_type].upcase)
 
       # callback area:
       if method == "get"
         uri.query = URI.encode_www_form(in_data)
       else
-        in_options.each do |key, value|
+        options.each do |key, value|
           request[key] = value
         end
+        request.body = DataTransform.send(options[:data_type], in_data)
       end
 
       yield(http, request, uri, method) if block_given?
