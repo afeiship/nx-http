@@ -40,7 +40,9 @@ module Nx
         end
       end
 
-      yield(uri, method, request, http)
+      if block_given?
+        yield(uri, method, request, http)
+      end
 
       begin
         http.request(request)
