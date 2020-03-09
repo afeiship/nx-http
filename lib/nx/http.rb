@@ -47,7 +47,7 @@ module Nx
       ["get", "post", "put", "delete", "options"].each do |item|
         define_method item.to_sym do |url, data = {}, options = {}, &block|
           self.request(item, url, data, options) do |http, request|
-            block.call(http, request)
+            block.call(http, request) if block_given?
           end
         end
       end
