@@ -33,7 +33,7 @@ module Nx
       else
         in_options.each do |key, value|
           if key == :content_type
-            ContentType.const_get value.upcase
+            request[key] = ContentType.const_get value.upcase
           else
             request[key] = value
           end
